@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import { Button, Space } from "antd";
 
@@ -52,6 +52,8 @@ const data = {
 };
 const Employee: FC = () => {
   const { cafeId } = useParams();
+  const navigate = useNavigate();
+
   const columns: (ColDef<any> | ColGroupDef<any>)[] | null = [
     {
       headerName: "Employee Id",
@@ -80,7 +82,14 @@ const Employee: FC = () => {
       field: "Edit/Delete ",
       cellRenderer: (params: ICellRendererParams<any, any, any>) => (
         <Space wrap>
-          <Button type="dashed">Edit</Button>
+          <Button
+            type="dashed"
+            onClick={() =>
+              navigate(`/employee/edit/${params.data.Employee_id}`)
+            }
+          >
+            Edit
+          </Button>
           <Button type="dashed" danger>
             Delete
           </Button>
@@ -91,7 +100,11 @@ const Employee: FC = () => {
 
   return (
     <CommenLayout
-      header={<Button type="primary">Add New Employee {cafeId}</Button>}
+      header={
+        <Button type="primary" onClick={() => navigate(`/employee/add`)}>
+          Add New Employee
+        </Button>
+      }
     >
       <AgGridReact columnDefs={columns} rowData={data.data} />
     </CommenLayout>
