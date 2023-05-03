@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
 import { useParams, useNavigate } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
-import { Button, Space } from "antd";
+import { Button, Popconfirm, Space } from "antd";
 
 import CommenLayout from "./commenLayout";
 
@@ -90,9 +90,17 @@ const Employee: FC = () => {
           >
             Edit
           </Button>
-          <Button type="dashed" danger>
-            Delete
-          </Button>
+          <Popconfirm
+            title="Delete"
+            description="Are you sure to delete this record?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => alert("deleted")}
+          >
+            <Button type="dashed" danger>
+              Delete
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },

@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { Button, Space } from "antd";
+import { Button, Space, Popconfirm } from "antd";
 import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { useNavigate } from "react-router-dom";
 import { ICellRendererParams, ColDef, ColGroupDef } from "ag-grid-community";
@@ -117,9 +117,17 @@ const Cafe: FC = () => {
           >
             Edit
           </Button>
-          <Button type="dashed" danger>
-            Delete
-          </Button>
+          <Popconfirm
+            title="Delete"
+            description="Are you sure to delete this record?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => alert("deleted")}
+          >
+            <Button type="dashed" danger>
+              Delete
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },

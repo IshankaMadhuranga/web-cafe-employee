@@ -1,10 +1,8 @@
 import { FC, useState } from "react";
-import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
-import { useParams } from "react-router-dom";
-import { AgGridReact } from "ag-grid-react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Button,
-  Cascader,
+  Popconfirm,
   Checkbox,
   DatePicker,
   Form,
@@ -37,15 +35,17 @@ interface ICafeForm {
 }
 const CafeForm: FC<ICafeForm> = ({ type }) => {
   const { cafId } = useParams();
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
+  const navigate = useNavigate();
+  const [componentDisabled] = useState<boolean>(false);
+  const { TextArea } = Input;
 
   const CustomHeader = () => {
     switch (type) {
       case "Edit":
-        return <p>Edit cafe : {cafId}</p>;
+        return <h2>Edit cafe : {cafId}</h2>;
         break;
       case "Add":
-        return <p>Add cafe</p>;
+        return <h2>Add cafe</h2>;
         break;
 
       default:
@@ -54,6 +54,8 @@ const CafeForm: FC<ICafeForm> = ({ type }) => {
     }
   };
 
+  const initialValues = { name: "Ishanka", gender: "male" };
+
   return (
     <CommenLayout header={CustomHeader()}>
       <Form
@@ -61,10 +63,36 @@ const CafeForm: FC<ICafeForm> = ({ type }) => {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         disabled={componentDisabled}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: "45rem" }}
+        initialValues={type == "Edit" ? initialValues : {}}
       >
-        <Form.Item label="Button">
-          <Button>Button</Button>
+        <Form.Item label="Name" name="name" required>
+          <Input type="text" autoFocus minLength={6} maxLength={10} required />
+        </Form.Item>
+        <Form.Item label="Description" name="discription" required>
+          <TextArea rows={8} maxLength={256} required />
+        </Form.Item>
+        <Form.Item label="Logo" name="logo" required>
+          <Input type="file" required />
+        </Form.Item>
+        <Form.Item label="Location" name="location" required>
+          <Input type="text" minLength={6} required />
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+
+          <Popconfirm
+            title="Save Changes"
+            description="Are you sure to undo this changes?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => navigate(-1)}
+          >
+            <Button htmlType="reset">Cancel</Button>
+          </Popconfirm>
         </Form.Item>
       </Form>
     </CommenLayout>
