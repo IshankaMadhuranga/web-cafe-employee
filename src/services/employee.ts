@@ -1,1 +1,1 @@
-export const empService = {};
+export const allEmployee = {};
