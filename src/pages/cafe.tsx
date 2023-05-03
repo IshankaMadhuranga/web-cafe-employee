@@ -1,14 +1,10 @@
 import { FC, useEffect } from "react";
-import { Button } from "antd";
+import { Button, Space } from "antd";
 import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { useNavigate } from "react-router-dom";
+import { ICellRendererParams, ColDef, ColGroupDef } from "ag-grid-community";
 
 import CommenLayout from "./commenLayout";
-import {
-  ColDef,
-  ColGroupDef,
-} from "ag-grid-community/dist/lib/entities/colDef";
-import { ICellRendererParams } from "ag-grid-community";
 
 const data = {
   data: [
@@ -113,6 +109,19 @@ const Cafe: FC = () => {
     },
     {
       field: "Edit/Delete ",
+      cellRenderer: (params: ICellRendererParams<any, any, any>) => (
+        <Space wrap>
+          <Button
+            type="dashed"
+            onClick={() => navigate(`/cafe/edit/${params.data.Name}`)}
+          >
+            Edit
+          </Button>
+          <Button type="dashed" danger>
+            Delete
+          </Button>
+        </Space>
+      ),
     },
   ];
 
