@@ -1,21 +1,6 @@
 import { FC, useState } from "react";
-import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
 import { useParams } from "react-router-dom";
-import { AgGridReact } from "ag-grid-react";
-import {
-  Button,
-  Cascader,
-  Checkbox,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TreeSelect,
-  Upload,
-} from "antd";
+import { Button, Space, Form, Input, InputNumber, Radio, Select } from "antd";
 
 import CommenLayout from "./commenLayout";
 
@@ -37,7 +22,7 @@ interface IEmployeeForm {
 }
 const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
   const { empId } = useParams();
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(true);
+  const [componentDisabled] = useState<boolean>(false);
 
   const CustomHeader = () => {
     switch (type) {
@@ -53,7 +38,7 @@ const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
         break;
     }
   };
-
+  const initialValues = { name: "Ishanka", gender: "male" };
   return (
     <CommenLayout header={CustomHeader()}>
       <Form
@@ -61,55 +46,37 @@ const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         disabled={componentDisabled}
-        style={{ maxWidth: 600 }}
+        style={{ maxWidth: "45rem" }}
+        initialValues={type == "Edit" ? initialValues : {}}
       >
-        <Form.Item label="Radio">
+        <Form.Item label="Name" name="name" required>
+          <Input type="text" autoFocus minLength={6} maxLength={10} required />
+        </Form.Item>
+        <Form.Item label="Email" name="email" required>
+          <Input type="email" required />
+        </Form.Item>
+        <Form.Item label="Phone number" name="phone" required>
+          <Input type="tel" required />
+        </Form.Item>
+        <Form.Item label="Gender" name="gender" required>
           <Radio.Group>
-            <Radio value="apple"> Apple </Radio>
-            <Radio value="pear"> Pear </Radio>
+            <Radio value="male"> Male </Radio>
+            <Radio value="femail"> Female </Radio>
           </Radio.Group>
         </Form.Item>
-        <Form.Item label="Input">
-          <Input />
-        </Form.Item>
-        <Form.Item label="Select">
+
+        <Form.Item label="Assigned Cafe" name="cafe">
           <Select>
-            <Select.Option value="demo">Demo</Select.Option>
+            <Select.Option value="cafe1">Cafe 1</Select.Option>
+            <Select.Option value="cafe2">Cafe 2</Select.Option>
           </Select>
         </Form.Item>
-        <Form.Item label="TreeSelect">
-          <TreeSelect
-            treeData={[
-              {
-                title: "Light",
-                value: "light",
-                children: [{ title: "Bamboo", value: "bamboo" }],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="Cascader">
-          <Cascader
-            options={[
-              {
-                value: "zhejiang",
-                label: "Zhejiang",
-                children: [
-                  {
-                    value: "hangzhou",
-                    label: "Hangzhou",
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item>
-        <Form.Item label="DatePicker">
-          <DatePicker />
-        </Form.Item>
 
-        <Form.Item label="Button">
-          <Button>Button</Button>
+        <Form.Item wrapperCol={{ offset: 4, span: 12 }}>
+          <Button htmlType="submit" type="primary">
+            Submit
+          </Button>
+          <Button htmlType="reset">Cancel</Button>
         </Form.Item>
       </Form>
     </CommenLayout>
