@@ -1,6 +1,15 @@
 import { FC, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Space, Form, Input, InputNumber, Radio, Select } from "antd";
+import {
+  Button,
+  Popconfirm,
+  Form,
+  Input,
+  InputNumber,
+  Radio,
+  Select,
+} from "antd";
+import { useNavigate } from "react-router-dom";
 
 import CommenLayout from "./commenLayout";
 
@@ -22,15 +31,16 @@ interface IEmployeeForm {
 }
 const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
   const { empId } = useParams();
+  const navigate = useNavigate();
   const [componentDisabled] = useState<boolean>(false);
 
   const CustomHeader = () => {
     switch (type) {
       case "Edit":
-        return <p>Edit Employee : {empId}</p>;
+        return <h2>Edit Employee : {empId}</h2>;
         break;
       case "Add":
-        return <p>Add Employee</p>;
+        return <h2>Add Employee</h2>;
         break;
 
       default:
@@ -76,7 +86,16 @@ const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
           <Button htmlType="submit" type="primary">
             Submit
           </Button>
-          <Button htmlType="reset">Cancel</Button>
+
+          <Popconfirm
+            title="Save Changes"
+            description="Are you sure to undo this changes?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => navigate(-1)}
+          >
+            <Button htmlType="reset">Cancel</Button>
+          </Popconfirm>
         </Form.Item>
       </Form>
     </CommenLayout>

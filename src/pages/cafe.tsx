@@ -130,7 +130,13 @@ const Cafe: FC = () => {
   }, []);
 
   return (
-    <CommenLayout header={<Button type="primary">Add New Café</Button>}>
+    <CommenLayout
+      header={
+        <Button type="primary" onClick={() => navigate(`/cafe/add`)}>
+          Add New Café
+        </Button>
+      }
+    >
       <AgGridReact columnDefs={columns} rowData={data.data} />
     </CommenLayout>
   );
