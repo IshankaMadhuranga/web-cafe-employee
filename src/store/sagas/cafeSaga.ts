@@ -1,18 +1,19 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
-  SucessRequestCafe,
+  sucessRequestCafe,
   requestCafe,
   faildRequestCafe,
+  sucessDeleteCafe,
 } from "../reducers/cafeSlice";
-import { currentUser } from "../../services/employee";
+import { fetchAllCafe } from "../../services/cafe";
 
 function* fetchCafes(): any {
   try {
-    let response = yield call(currentUser);
+    let response = yield call(fetchAllCafe);
     response = response.data;
 
     if (response) {
-      yield put(SucessRequestCafe(response));
+      yield put(sucessRequestCafe(response));
     } else {
       yield put(faildRequestCafe("Null"));
     }
@@ -22,7 +23,7 @@ function* fetchCafes(): any {
 }
 
 function* cafeSaga() {
-  yield takeLatest(requestCafe, fetchCafes);
+  yield takeLatest([requestCafe, sucessDeleteCafe], fetchCafes);
 }
 
 export default cafeSaga;
