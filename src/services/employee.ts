@@ -1,1 +1,1 @@
-export const allEmployee = {};
+export const fetchAllEmployee = () => {};

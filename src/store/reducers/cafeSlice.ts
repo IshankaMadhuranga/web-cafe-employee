@@ -29,7 +29,7 @@ export const cafeSlice = createSlice({
       return { ...state, error: action.payload, processing: false };
     },
     requestDeleteCafe: (state, action: PayloadAction<number>) => {
-      return { ...initialState, cafeId: action.payload, processing: true };
+      return { ...state, cafeId: action.payload, processing: true };
     },
     sucessDeleteCafe: (state) => {
       return { ...state, error: null, processing: false };

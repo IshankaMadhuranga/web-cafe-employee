@@ -3,12 +3,13 @@ import {
   requestEmployee,
   sucessRequestEmployee,
   faildRequestEmployee,
+  sucessDeleteEmployee,
 } from "../reducers/employeeSlice";
-import { allEmployee } from "../../services/employee";
+import { fetchAllEmployee } from "../../services/employee";
 
 function* fetchEmployee(): any {
   try {
-    let response = yield call(allEmployee);
+    let response = yield call(fetchAllEmployee);
     response = response.data;
 
     if (response) {
@@ -22,7 +23,7 @@ function* fetchEmployee(): any {
 }
 
 function* employeeSaga() {
-  yield takeLatest(requestEmployee, fetchEmployee);
+  yield takeLatest([requestEmployee, sucessDeleteEmployee], fetchEmployee);
 }
 
 export default employeeSaga;
