@@ -11,3 +11,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-form-item .ant-form-item-label{
+  text-align: left !important;
+}
+.ant-form-item-control-input-content .ant-btn:not(:first-child){
+  margin-left: 10px;
+}
+.ant-layout-footer{
+  color: rgb(135 135 135) !important;
+  background-color: rgb(226 226 226) !important;
+}
+.employee-table .ag-center-cols-clipper .ag-center-cols-viewport{
+  width: max-content !important;
+}
+.cafe-table .ag-center-cols-container{
+  width: 100% !important;
+}
+
+.ant-layout-header{
+  color: rgb(90 90 90) !important;
+  background-color: rgb(198 226 247) !important;
+}
+.ant-layout-header .ant-btn:not(:first-child){
+  margin-left: 10px;;
+}

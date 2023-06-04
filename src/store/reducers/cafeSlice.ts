@@ -1,15 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../";
 
+export interface Cafe {
+  name: string;
+  description: string;
+  totalEmployees: number;
+  location: string;
+  id: string;
+}
 export interface CafeState {
-  readonly cafe: object[] | null;
+  readonly cafes: Cafe[] | null;
   readonly cafeId: number;
   readonly processing: boolean;
   readonly error?: string | null;
 }
 
 const initialState: CafeState = {
-  cafe: null,
+  cafes: null,
   cafeId: 0,
   processing: false,
   error: null,
@@ -22,8 +29,8 @@ export const cafeSlice = createSlice({
     requestCafe: (state) => {
       return { ...state, error: null, processing: true };
     },
-    sucessRequestCafe: (state, action: PayloadAction<object[]>) => {
-      return { ...initialState, cafe: action.payload, processing: false };
+    sucessRequestCafe: (state, action: PayloadAction<Cafe[]>) => {
+      return { ...initialState, cafes: action.payload, processing: false };
     },
     faildRequestCafe: (state, action: PayloadAction<string>) => {
       return { ...state, error: action.payload, processing: false };
@@ -42,12 +49,13 @@ export const cafeSlice = createSlice({
 
 export const {
   requestCafe,
+  requestDeleteCafe,
   sucessRequestCafe,
   faildRequestCafe,
   sucessDeleteCafe,
+  faildDeleteCafe,
 } = cafeSlice.actions;
-export const selectCafe = (state: RootState) => ({
-  cafe: state.cafes,
-});
+export const selectCafe = (state: RootState) => state.cafes.cafes;
+export const selectCafeId = (state: RootState): number => state.cafes.cafeId;
 export const selectError = (state: RootState) => state.cafes.error;
 export default cafeSlice.reducer;

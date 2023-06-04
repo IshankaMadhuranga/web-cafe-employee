@@ -1,15 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
+import { store } from "./store";
 import "./index.css";
 import AppRoutes from "./appRoutes";
 import reportWebVitals from "./reportWebVitals";
+
+const AppWrapper = ({ children }: { children: JSX.Element }) => {
+  return <Provider store={store}>{children}</Provider>;
+};
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppRoutes />
+    <AppWrapper>
+      <AppRoutes />
+    </AppWrapper>
   </React.StrictMode>
 );
 

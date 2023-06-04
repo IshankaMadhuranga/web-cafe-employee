@@ -3,13 +3,16 @@ import {
   sucessRequestCafe,
   requestCafe,
   faildRequestCafe,
+  requestDeleteCafe,
   sucessDeleteCafe,
+  faildDeleteCafe,
+  selectCafeId,
 } from "../reducers/cafeSlice";
-import { fetchAllCafe } from "../../services/cafe";
+import { getAllCafe, deleteCafe } from "../../services/cafe";
 
 function* fetchCafes(): any {
   try {
-    let response = yield call(fetchAllCafe);
+    let response = yield call(getAllCafe);
     response = response.data;
 
     if (response) {
@@ -22,8 +25,24 @@ function* fetchCafes(): any {
   }
 }
 
+function* deletCafe(): any {
+  try {
+    let response = yield call(deleteCafe, 3); //To Do
+    response = response.data;
+
+    if (response) {
+      yield put(sucessDeleteCafe(response));
+    } else {
+      yield put(faildDeleteCafe("Null"));
+    }
+  } catch (e: any) {
+    yield put(faildRequestCafe(e.data.error));
+  }
+}
+
 function* cafeSaga() {
   yield takeLatest([requestCafe, sucessDeleteCafe], fetchCafes);
+  yield takeLatest([requestDeleteCafe], deletCafe);
 }
 
 export default cafeSaga;

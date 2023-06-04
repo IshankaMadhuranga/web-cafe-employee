@@ -1,111 +1,45 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Button, Space, Popconfirm } from "antd";
 import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { useNavigate } from "react-router-dom";
 import { ICellRendererParams, ColDef, ColGroupDef } from "ag-grid-community";
+import { useDispatch, useSelector } from "react-redux";
+import { requestCafe, selectCafe } from "../store/reducers/cafeSlice";
 
 import CommenLayout from "./commenLayout";
 
-const data = {
-  data: [
-    {
-      Logo: "logo",
-      Name: "name1",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name2",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name3",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name1",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name2",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name3",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name1",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name2",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name3",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-    {
-      Logo: "logo",
-      Name: "name3",
-      Description: "description",
-      Employees: "employeess",
-      Location: "location",
-    },
-  ],
-};
-
 const Cafe: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cafeData = useSelector(selectCafe);
+
+  useEffect(() => {
+    dispatch(requestCafe());
+  }, []);
 
   const columns: (ColDef<any> | ColGroupDef<any>)[] | null = [
     {
-      field: "Logo",
+      headerName: "Name",
+      field: "name",
     },
     {
-      field: "Name",
+      headerName: "Description",
+      field: "description",
     },
     {
-      field: "Description",
-    },
-    {
-      field: "Employees",
+      headerName: "Employees",
+      field: "totalEmployees",
       cellRenderer: (params: ICellRendererParams<any, any, any>) => (
         <>
-          <a onClick={() => navigate(`/employee/${Math.random()}`)}>
+          <a onClick={() => navigate(`/employee/${params.data.id.slice(2)}`)}>
             {params.value}
           </a>
         </>
       ),
     },
     {
-      field: "Location",
+      headerName: "Location",
+      field: "location",
     },
     {
       field: "Edit/Delete ",
@@ -113,7 +47,7 @@ const Cafe: FC = () => {
         <Space wrap>
           <Button
             type="dashed"
-            onClick={() => navigate(`/cafe/edit/${params.data.Name}`)}
+            onClick={() => navigate(`/cafe/edit/${params.data.id.slice(2)}`)}
           >
             Edit
           </Button>
@@ -133,10 +67,6 @@ const Cafe: FC = () => {
     },
   ];
 
-  useEffect(() => {
-    console.log("load data");
-  }, []);
-
   return (
     <CommenLayout
       header={
@@ -145,7 +75,11 @@ const Cafe: FC = () => {
         </Button>
       }
     >
-      <AgGridReact columnDefs={columns} rowData={data.data} />
+      <AgGridReact
+        columnDefs={columns}
+        rowData={cafeData}
+        className="cafe-table"
+      />
     </CommenLayout>
   );
 };

@@ -9,10 +9,11 @@ const AppRoutes: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Cafe />} />
-        <Route path="/cafe/edit/:cafId" element={<CafeForm type="Edit" />} />
+        <Route index element={<Cafe />} />
+        <Route path="/cafe/edit/:cafeId" element={<CafeForm type="Edit" />} />
         <Route path="/cafe/add" element={<CafeForm type="Add" />} />
         <Route path="/employee/:cafeId" element={<Employee />} />
+        <Route path="/employee" element={<Employee />} />
         <Route
           path="/employee/edit/:empId"
           element={<EmployeeForm type="Edit" />}

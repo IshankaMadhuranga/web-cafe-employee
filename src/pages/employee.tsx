@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
 import { useParams, useNavigate } from "react-router-dom";
 import { AgGridReact } from "ag-grid-react";
 import { Button, Popconfirm, Space } from "antd";
 
+import { getCafeEmployee } from "../services/employee";
 import CommenLayout from "./commenLayout";
 
 const data = {
@@ -51,32 +52,43 @@ const data = {
   ],
 };
 const Employee: FC = () => {
-  const { cafeId } = useParams();
   const navigate = useNavigate();
+  const { cafeId } = useParams();
+  const [employeeData, setEmployeeData] = useState(null);
+
+  useEffect(() => {
+    const cafId = parseInt(cafeId ?? "");
+    if (cafId) {
+      getCafeEmployee(cafId).then((response) => {
+        setEmployeeData(response.data);
+      });
+    }
+  }, [cafeId]);
 
   const columns: (ColDef<any> | ColGroupDef<any>)[] | null = [
     {
       headerName: "Employee Id",
-      field: "Employee_id",
+      field: "id",
     },
     {
-      field: "Name",
+      headerName: "Name",
+      field: "name",
     },
     {
       headerName: "Email address",
-      field: "Email_address",
+      field: "email",
     },
     {
       headerName: "Phone number",
-      field: "Phone_number",
+      field: "phone",
     },
     {
       headerName: "Days worked in the café",
-      field: "Days",
+      field: "daysWorked",
     },
     {
       headerName: "Café name",
-      field: "Café_name",
+      field: "cafeName",
     },
     {
       field: "Edit/Delete ",
@@ -114,7 +126,11 @@ const Employee: FC = () => {
         </Button>
       }
     >
-      <AgGridReact columnDefs={columns} rowData={data.data} />
+      <AgGridReact
+        columnDefs={columns}
+        rowData={employeeData}
+        className="employee-table"
+      />
     </CommenLayout>
   );
 };

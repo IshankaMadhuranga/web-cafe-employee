@@ -1,11 +1,13 @@
-export const CafeEndPoints = {
-  GET: "/cafes",
-  POST: "/cafe",
-  PUT: "/cafe",
+export const Cafe = {
+  GET_ALL: "cafes",
+  POST: "cafe",
+  PUT: "cafe",
+  DELETE: "cafe",
 };
 
-export const EmployeeEndPoints = {
-  GET: "/employees",
-  POST: "/employee",
-  PUT: "/employee",
+export const Employee = {
+  GET_ALL: "employees",
+  GET_CAFE_EMP: "employees/cafe",
+  POST: "employee",
+  PUT: "employee",
 };
