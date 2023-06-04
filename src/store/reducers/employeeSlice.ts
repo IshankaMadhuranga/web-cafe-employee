@@ -19,13 +19,13 @@ export const employeeSlice = createSlice({
   name: "employee",
   initialState,
   reducers: {
-    requestEmployee: (state) => {
+    requestEmployees: (state) => {
       return { ...state, error: null, processing: true };
     },
-    sucessRequestEmployee: (state, action: PayloadAction<object[]>) => {
+    sucessRequestEmployees: (state, action: PayloadAction<object[]>) => {
       return { ...initialState, employee: action.payload, processing: false };
     },
-    faildRequestEmployee: (state, action: PayloadAction<string>) => {
+    faildRequestEmployees: (state, action: PayloadAction<string>) => {
       return { ...state, error: action.payload, processing: false };
     },
     requestDeleteEmployee: (state, action: PayloadAction<number>) => {
@@ -41,13 +41,14 @@ export const employeeSlice = createSlice({
 });
 
 export const {
-  requestEmployee,
-  sucessRequestEmployee,
-  faildRequestEmployee,
+  requestEmployees,
+  sucessRequestEmployees,
+  faildRequestEmployees,
   sucessDeleteEmployee,
+  requestDeleteEmployee,
+  faildDeleteEmployee,
 } = employeeSlice.actions;
-export const selectEmployees = (state: RootState) => ({
-  employee: state.employees,
-});
+export const selectEmployees = (state: RootState) => state.employees.employee;
+export const selectEmployeeId = (state: RootState) => state.employees.empId;
 export const selectError = (state: RootState) => state.employees.error;
 export default employeeSlice.reducer;

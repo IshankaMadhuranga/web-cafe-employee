@@ -4,7 +4,11 @@ import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { useNavigate } from "react-router-dom";
 import { ICellRendererParams, ColDef, ColGroupDef } from "ag-grid-community";
 import { useDispatch, useSelector } from "react-redux";
-import { requestCafe, selectCafe } from "../store/reducers/cafeSlice";
+import {
+  requestCafe,
+  requestDeleteCafe,
+  selectCafe,
+} from "../store/reducers/cafeSlice";
 
 import CommenLayout from "./commenLayout";
 
@@ -56,7 +60,9 @@ const Cafe: FC = () => {
             description="Are you sure to delete this record?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => alert("deleted")}
+            onConfirm={() =>
+              dispatch(requestDeleteCafe(Number(params.data.id.slice(2))))
+            }
           >
             <Button type="dashed" danger>
               Delete

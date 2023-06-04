@@ -8,6 +8,7 @@ export const Cafe = {
 export const Employee = {
   GET_ALL: "employees",
   GET_CAFE_EMP: "employees/cafe",
+  DELETE: "employee",
   POST: "employee",
   PUT: "employee",
 };

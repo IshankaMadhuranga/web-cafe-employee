@@ -1,60 +1,24 @@
 import { FC, useEffect, useState } from "react";
 import { ColDef, ColGroupDef, ICellRendererParams } from "ag-grid-community";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { AgGridReact } from "ag-grid-react";
 import { Button, Popconfirm, Space } from "antd";
 
+import {
+  requestDeleteEmployee,
+  selectEmployees,
+  requestEmployees,
+} from "../store/reducers/employeeSlice";
 import { getCafeEmployee } from "../services/employee";
 import CommenLayout from "./commenLayout";
 
-const data = {
-  data: [
-    {
-      Employee_id: 1,
-      Name: "Name 1",
-      Email_address: "email@gmail.com",
-      Phone_number: "0773217165",
-      Days: 5,
-      Café_name: "cafe name",
-    },
-    {
-      Employee_id: 2,
-      Name: "Name 2",
-      Email_address: "email@gmail.com",
-      Phone_number: "0773217165",
-      Days: 5,
-      Café_name: "cafe name",
-    },
-    {
-      Employee_id: 3,
-      Name: "Name 3",
-      Email_address: "email@gmail.com",
-      Phone_number: "0773217165",
-      Days: 5,
-      Café_name: "cafe name",
-    },
-    {
-      Employee_id: 4,
-      Name: "Name 4",
-      Email_address: "email@gmail.com",
-      Phone_number: "0773217165",
-      Days: 5,
-      Café_name: "cafe name",
-    },
-    {
-      Employee_id: 5,
-      Name: "Name 5",
-      Email_address: "email@gmail.com",
-      Phone_number: "0773217165",
-      Days: 5,
-      Café_name: "cafe name",
-    },
-  ],
-};
 const Employee: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { cafeId } = useParams();
-  const [employeeData, setEmployeeData] = useState(null);
+  const [employeeData, setEmployeeData] = useState<object[] | null>(null);
+  const empData = useSelector(selectEmployees);
 
   useEffect(() => {
     const cafId = parseInt(cafeId ?? "");
@@ -62,8 +26,16 @@ const Employee: FC = () => {
       getCafeEmployee(cafId).then((response) => {
         setEmployeeData(response.data);
       });
+    } else {
+      dispatch(requestEmployees());
     }
   }, [cafeId]);
+
+  useEffect(() => {
+    if (empData) {
+      setEmployeeData(empData);
+    }
+  }, [empData]);
 
   const columns: (ColDef<any> | ColGroupDef<any>)[] | null = [
     {
@@ -97,7 +69,7 @@ const Employee: FC = () => {
           <Button
             type="dashed"
             onClick={() =>
-              navigate(`/employee/edit/${params.data.Employee_id}`)
+              navigate(`/employee/edit/${params.data.id.slice(2)}`)
             }
           >
             Edit
@@ -107,7 +79,9 @@ const Employee: FC = () => {
             description="Are you sure to delete this record?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => alert("deleted")}
+            onConfirm={() =>
+              dispatch(requestDeleteEmployee(Number(params.data.id.slice(2))))
+            }
           >
             <Button type="dashed" danger>
               Delete

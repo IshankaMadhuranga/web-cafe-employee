@@ -27,11 +27,11 @@ function* fetchCafes(): any {
 
 function* deletCafe(): any {
   try {
-    let response = yield call(deleteCafe, 3); //To Do
-    response = response.data;
+    let response = yield call(deleteCafe, Number(selectCafeId));
+    response = response.status;
 
-    if (response) {
-      yield put(sucessDeleteCafe(response));
+    if (response == 204) {
+      yield put(sucessDeleteCafe);
     } else {
       yield put(faildDeleteCafe("Null"));
     }

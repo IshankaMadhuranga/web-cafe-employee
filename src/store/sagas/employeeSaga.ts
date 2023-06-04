@@ -1,29 +1,48 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
-  requestEmployee,
-  sucessRequestEmployee,
-  faildRequestEmployee,
+  requestEmployees,
+  requestDeleteEmployee,
+  sucessRequestEmployees,
+  faildRequestEmployees,
   sucessDeleteEmployee,
+  selectEmployeeId,
+  faildDeleteEmployee,
 } from "../reducers/employeeSlice";
-import { fetchAllEmployee } from "../../services/employee";
+import { getEmployees, deleteEmployee } from "../../services/employee";
 
 function* fetchEmployee(): any {
   try {
-    let response = yield call(fetchAllEmployee);
+    let response = yield call(getEmployees);
     response = response.data;
 
     if (response) {
-      yield put(sucessRequestEmployee(response));
+      yield put(sucessRequestEmployees(response));
     } else {
-      yield put(faildRequestEmployee("Null"));
+      yield put(faildRequestEmployees("Null"));
     }
   } catch (e: any) {
-    yield put(faildRequestEmployee(e.data.error));
+    yield put(faildRequestEmployees(e.data.error));
+  }
+}
+
+function* deletCafe(): any {
+  try {
+    let response = yield call(deleteEmployee, Number(selectEmployeeId));
+    response = response.status;
+
+    if (response == 204) {
+      yield put(sucessDeleteEmployee);
+    } else {
+      yield put(faildDeleteEmployee("Null"));
+    }
+  } catch (e: any) {
+    yield put(faildDeleteEmployee(e.data.error));
   }
 }
 
 function* employeeSaga() {
-  yield takeLatest([requestEmployee, sucessDeleteEmployee], fetchEmployee);
+  yield takeLatest([requestEmployees, sucessDeleteEmployee], fetchEmployee);
+  yield takeLatest([requestDeleteEmployee], deletCafe);
 }
 
 export default employeeSaga;

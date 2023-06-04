@@ -36,3 +36,9 @@ code {
 .ant-layout-header .ant-btn:not(:first-child){
   margin-left: 10px;;
 }
+
+.ant-layout-header{
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(53,122,232,1) 35%, rgba(197,225,246,1) 100%) !important;
+  padding: 0 5rem;
+}

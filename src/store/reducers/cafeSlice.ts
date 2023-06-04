@@ -56,6 +56,6 @@ export const {
   faildDeleteCafe,
 } = cafeSlice.actions;
 export const selectCafe = (state: RootState) => state.cafes.cafes;
-export const selectCafeId = (state: RootState): number => state.cafes.cafeId;
+export const selectCafeId = (state: RootState) => state.cafes.cafeId;
 export const selectError = (state: RootState) => state.cafes.error;
 export default cafeSlice.reducer;
