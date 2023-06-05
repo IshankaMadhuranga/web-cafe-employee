@@ -9,6 +9,7 @@ import {
   requestDeleteEmployee,
   selectEmployees,
   requestEmployees,
+  EmployeeDto,
 } from "../store/reducers/employeeSlice";
 import { getCafeEmployee } from "../services/employee";
 import CommenLayout from "./commenLayout";
@@ -17,7 +18,7 @@ const Employee: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cafeId } = useParams();
-  const [employeeData, setEmployeeData] = useState<object[] | null>(null);
+  const [employeeData, setEmployeeData] = useState<EmployeeDto[] | null>(null);
   const empData = useSelector(selectEmployees);
 
   useEffect(() => {

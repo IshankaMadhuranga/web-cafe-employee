@@ -34,7 +34,7 @@ interface ICafeForm {
   type: "Edit" | "Add";
 }
 const CafeForm: FC<ICafeForm> = ({ type }) => {
-  const { cafId } = useParams();
+  const { cafeId } = useParams();
   const navigate = useNavigate();
   const [componentDisabled] = useState<boolean>(false);
   const { TextArea } = Input;
@@ -42,7 +42,7 @@ const CafeForm: FC<ICafeForm> = ({ type }) => {
   const CustomHeader = () => {
     switch (type) {
       case "Edit":
-        return <h2>Edit cafe : {cafId}</h2>;
+        return <h2>Edit cafe : {cafeId}</h2>;
         break;
       case "Add":
         return <h2>Add cafe</h2>;

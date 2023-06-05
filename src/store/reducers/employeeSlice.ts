@@ -1,8 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../";
 
+export interface EmployeeDto {
+  id: "string";
+  name: string;
+  email: string;
+  phone: string;
+  daysWorked: number;
+  cafeName: string;
+}
 export interface EmployeeState {
-  readonly employee: object[] | null;
+  readonly employee: EmployeeDto[] | null;
   readonly empId: number;
   readonly processing: boolean;
   readonly error?: string | null;
@@ -22,7 +30,7 @@ export const employeeSlice = createSlice({
     requestEmployees: (state) => {
       return { ...state, error: null, processing: true };
     },
-    sucessRequestEmployees: (state, action: PayloadAction<object[]>) => {
+    sucessRequestEmployees: (state, action: PayloadAction<EmployeeDto[]>) => {
       return { ...initialState, employee: action.payload, processing: false };
     },
     faildRequestEmployees: (state, action: PayloadAction<string>) => {

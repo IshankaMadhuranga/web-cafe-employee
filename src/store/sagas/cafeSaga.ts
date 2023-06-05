@@ -1,4 +1,5 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
+import { useSelector } from "react-redux";
 import {
   sucessRequestCafe,
   requestCafe,
@@ -27,11 +28,12 @@ function* fetchCafes(): any {
 
 function* deletCafe(): any {
   try {
-    let response = yield call(deleteCafe, Number(selectCafeId));
+    const cafeId = yield select(selectCafeId);
+    let response = yield call(deleteCafe, cafeId);
     response = response.status;
 
     if (response == 204) {
-      yield put(sucessDeleteCafe);
+      yield put(sucessDeleteCafe());
     } else {
       yield put(faildDeleteCafe("Null"));
     }

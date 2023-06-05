@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, select } from "redux-saga/effects";
 import {
   requestEmployees,
   requestDeleteEmployee,
@@ -27,11 +27,12 @@ function* fetchEmployee(): any {
 
 function* deletCafe(): any {
   try {
-    let response = yield call(deleteEmployee, Number(selectEmployeeId));
+    const empId = yield select(selectEmployeeId);
+    let response = yield call(deleteEmployee, empId);
     response = response.status;
 
     if (response == 204) {
-      yield put(sucessDeleteEmployee);
+      yield put(sucessDeleteEmployee());
     } else {
       yield put(faildDeleteEmployee("Null"));
     }
