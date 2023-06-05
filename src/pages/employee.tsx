@@ -42,6 +42,12 @@ const Employee: FC = () => {
     {
       headerName: "Employee Id",
       field: "id",
+      valueFormatter: (params) => {
+        //Format the id
+        let val = params.data.id + "";
+        while (val.length < 7) val = "0" + val;
+        return "UI" + val;
+      },
     },
     {
       headerName: "Name",
@@ -70,7 +76,7 @@ const Employee: FC = () => {
           <Button
             type="dashed"
             onClick={() =>
-              navigate(`/employee/edit/${params.data.id.slice(2)}`, {
+              navigate(`/employee/edit/${params.data.id}`, {
                 state: params.data,
               })
             }
@@ -82,9 +88,7 @@ const Employee: FC = () => {
             description="Are you sure to delete this record?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() =>
-              dispatch(requestDeleteEmployee(Number(params.data.id.slice(2))))
-            }
+            onConfirm={() => dispatch(requestDeleteEmployee(params.data.id))}
           >
             <Button type="dashed" danger>
               Delete
