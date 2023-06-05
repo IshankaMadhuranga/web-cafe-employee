@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../";
 
 export interface EmployeeDto {
-  id: "string";
+  id: string;
   name: string;
   email: string;
   phone: string;
   daysWorked: number;
   cafeName: string;
+  gender: number;
+  cafeId: number;
 }
 export interface EmployeeState {
   readonly employee: EmployeeDto[] | null;

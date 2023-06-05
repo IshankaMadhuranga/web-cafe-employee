@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { Button, Space, Popconfirm } from "antd";
 import { AgGridReact } from "ag-grid-react"; // the AG Grid React Component
 import { useNavigate } from "react-router-dom";
@@ -44,6 +44,7 @@ const Cafe: FC = () => {
     {
       headerName: "Location",
       field: "location",
+      filter: true,
     },
     {
       field: "Edit/Delete ",
@@ -80,7 +81,11 @@ const Cafe: FC = () => {
   return (
     <CommenLayout
       header={
-        <Button type="primary" onClick={() => navigate(`/cafe/add`)}>
+        <Button
+          type="primary"
+          style={{ marginBottom: "1rem" }}
+          onClick={() => navigate(`/cafe/add`)}
+        >
           Add New Café
         </Button>
       }

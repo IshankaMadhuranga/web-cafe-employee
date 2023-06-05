@@ -98,7 +98,11 @@ const Employee: FC = () => {
   return (
     <CommenLayout
       header={
-        <Button type="primary" onClick={() => navigate(`/employee/add`)}>
+        <Button
+          type="primary"
+          style={{ marginBottom: "1rem" }}
+          onClick={() => navigate(`/employee/add`)}
+        >
           Add New Employee
         </Button>
       }
