@@ -115,12 +115,9 @@ const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
               openNotification();
             });
           } else {
-            const data = { ...values, cafeId: values.cafeId[0] }; //To Do multiple
-            addEmployee(values)
-              .then(() => {
-                openNotification();
-              })
-              .catch((e) => console.error(e));
+            addEmployee(values).then(() => {
+              openNotification();
+            });
           }
         }}
       >
@@ -130,7 +127,19 @@ const EmployeeForm: FC<IEmployeeForm> = ({ type }) => {
         <Form.Item label="Email" name="email" required>
           <Input type="email" required />
         </Form.Item>
-        <Form.Item label="Phone number" name="phone" required>
+        <Form.Item
+          label="Phone number"
+          name="phone"
+          required
+          rules={[
+            {
+              pattern: new RegExp(
+                /[6|8|9]\d{7}|\+65[6|8|9]\d{7}|\+65\s[6|8|9]\d{7}/g
+              ),
+              message: "Not a valid SG phone number",
+            },
+          ]}
+        >
           <Input type="tel" required />
         </Form.Item>
         <Form.Item label="Gender" name="gender" required>

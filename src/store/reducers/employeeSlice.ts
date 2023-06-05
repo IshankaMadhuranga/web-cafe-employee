@@ -60,5 +60,7 @@ export const {
 } = employeeSlice.actions;
 export const selectEmployees = (state: RootState) => state.employees.employee;
 export const selectEmployeeId = (state: RootState) => state.employees.empId;
+export const selectEmpProcessing = (state: RootState) =>
+  state.employees.processing;
 export const selectError = (state: RootState) => state.employees.error;
 export default employeeSlice.reducer;

@@ -57,5 +57,7 @@ export const {
 } = cafeSlice.actions;
 export const selectCafe = (state: RootState) => state.cafes.cafes;
 export const selectCafeId = (state: RootState) => state.cafes.cafeId;
+export const selectCafeProcessing = (state: RootState) =>
+  state.cafes.processing;
 export const selectError = (state: RootState) => state.cafes.error;
 export default cafeSlice.reducer;

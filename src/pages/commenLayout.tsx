@@ -1,10 +1,12 @@
-import React, { FC, useState } from "react";
-import { Menu, Layout, theme } from "antd";
+import React, { FC } from "react";
+import { Menu, Layout, Spin } from "antd";
 import type { MenuProps } from "antd";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
-
+import { selectEmpProcessing } from "../store/reducers/employeeSlice";
+import { selectCafeProcessing } from "../store/reducers/cafeSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const { Header, Footer, Content } = Layout;
 
 const headerStyle: React.CSSProperties = {
@@ -33,7 +35,9 @@ export interface ILayout {
 
 const CommenLayout: FC<ILayout> = ({ header, children }) => {
   const navigate = useNavigate();
-  const [current, setCurrent] = useState("cafes");
+  const empProcessing = useSelector(selectEmpProcessing);
+
+  const cafeProcessing = useSelector(selectCafeProcessing);
 
   const items: MenuProps["items"] = [
     {
@@ -49,20 +53,14 @@ const CommenLayout: FC<ILayout> = ({ header, children }) => {
       onClick: () => navigate("/employee"),
     },
   ];
-  const onClick: MenuProps["onClick"] = (e) => {
-    setCurrent(e.key);
-  };
 
   return (
     <Layout>
-      <Menu
-        // onClick={onClick}
-        // selectedKeys={[current]}
-        mode="horizontal"
-        items={items}
-        style={headerStyle}
+      <Menu mode="horizontal" items={items} style={headerStyle} />
+      <Spin
+        style={{ zIndex: 1, height: "50%" }}
+        spinning={empProcessing || cafeProcessing}
       />
-
       <Content style={contentStyle} className="ag-theme-alpine">
         {header}
         {children}
