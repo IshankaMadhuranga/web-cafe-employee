@@ -51,7 +51,11 @@ const Cafe: FC = () => {
         <Space wrap>
           <Button
             type="dashed"
-            onClick={() => navigate(`/cafe/edit/${params.data.id.slice(2)}`)}
+            onClick={() =>
+              navigate(`/cafe/edit/${params.data.id.slice(2)}`, {
+                state: params.data,
+              })
+            }
           >
             Edit
           </Button>
