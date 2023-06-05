@@ -6,7 +6,7 @@ export interface Cafe {
   description: string;
   totalEmployees: number;
   location: string;
-  id: string;
+  id: string | number;
 }
 export interface CafeState {
   readonly cafes: Cafe[] | null;

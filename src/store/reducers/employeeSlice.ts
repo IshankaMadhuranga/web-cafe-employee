@@ -37,7 +37,7 @@ export const employeeSlice = createSlice({
       return { ...state, error: action.payload, processing: false };
     },
     requestDeleteEmployee: (state, action: PayloadAction<number>) => {
-      return { ...state, cafeId: action.payload, processing: true };
+      return { ...state, empId: action.payload, processing: true };
     },
     sucessDeleteEmployee: (state) => {
       return { ...state, error: null, processing: false };

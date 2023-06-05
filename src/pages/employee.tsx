@@ -70,7 +70,9 @@ const Employee: FC = () => {
           <Button
             type="dashed"
             onClick={() =>
-              navigate(`/employee/edit/${params.data.id.slice(2)}`)
+              navigate(`/employee/edit/${params.data.id.slice(2)}`, {
+                state: params.data,
+              })
             }
           >
             Edit
